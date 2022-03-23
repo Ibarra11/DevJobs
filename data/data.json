@@ -285,5 +285,98 @@
         "Take part in decision-making around major architectural choices of the front-end team"
       ]
     }
+  },
+  {
+    "id": 10,
+    "company": "Coffeeroasters",
+    "logo": "./assets/logos/coffeeroasters.svg",
+    "logoBackground": "hsl(29, 60%, 87%)",
+    "position": "Senior Frontend Developer",
+    "postedAt": "1w ago",
+    "contract": "Part Time",
+    "location": "Singapore",
+    "website": "https://example.com/coffeeroasters",
+    "apply": "https://example.com/coffeeroasters/apply",
+    "description": "We’re looking for an experienced Frontend Developer with an eye for Product Design along with a honed set of coding skills and who shares our values around technology. Most importantly, we’d like someone who is collaborative and can work closely with the rest of our team shaping product.",
+    "requirements": {
+      "content": "You will be responsible for executing high quality solutions for customers and contributing to the day-to-day technical excellence of a delivery team. You should have a deep understanding of Modern JavaScript, HTML and CSS, the software development life cycle, and possess the ability to implement and execute standard software architecture patterns.",
+      "items": [
+        "4+ years of experience of Frontend Development",
+        "Expertise with React required",
+        "Expertise with Next.js, Apollo, Typescript, and GraphQL preferred"
+      ]
+    },
+    "role": {
+      "content": "Beyond working closely with our team to build an exciting app, you’ll be leading Frontend development of our React/Next.js product. You’ll be coming up with UI/UX for the app and making architectural decisions for the frontend.",
+      "items": [
+        "Use your thorough understanding of core client-side technologies to architect complex user interactions for desktop and mobile browsers using React",
+        "Create universal JS modules to be used on both the client and the server",
+        "Lead, direct and mentor more junior team members (including code review)",
+        "Cover your code with unit and integration tests written with Jest and Mocha",
+        "Take part in decision-making around major architectural choices of the front-end team"
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "company": "Coffeeroasters",
+    "logo": "./assets/logos/coffeeroasters.svg",
+    "logoBackground": "hsl(29, 60%, 87%)",
+    "position": "Senior Frontend Developer",
+    "postedAt": "1w ago",
+    "contract": "Part Time",
+    "location": "Singapore",
+    "website": "https://example.com/coffeeroasters",
+    "apply": "https://example.com/coffeeroasters/apply",
+    "description": "We’re looking for an experienced Frontend Developer with an eye for Product Design along with a honed set of coding skills and who shares our values around technology. Most importantly, we’d like someone who is collaborative and can work closely with the rest of our team shaping product.",
+    "requirements": {
+      "content": "You will be responsible for executing high quality solutions for customers and contributing to the day-to-day technical excellence of a delivery team. You should have a deep understanding of Modern JavaScript, HTML and CSS, the software development life cycle, and possess the ability to implement and execute standard software architecture patterns.",
+      "items": [
+        "4+ years of experience of Frontend Development",
+        "Expertise with React required",
+        "Expertise with Next.js, Apollo, Typescript, and GraphQL preferred"
+      ]
+    },
+    "role": {
+      "content": "Beyond working closely with our team to build an exciting app, you’ll be leading Frontend development of our React/Next.js product. You’ll be coming up with UI/UX for the app and making architectural decisions for the frontend.",
+      "items": [
+        "Use your thorough understanding of core client-side technologies to architect complex user interactions for desktop and mobile browsers using React",
+        "Create universal JS modules to be used on both the client and the server",
+        "Lead, direct and mentor more junior team members (including code review)",
+        "Cover your code with unit and integration tests written with Jest and Mocha",
+        "Take part in decision-making around major architectural choices of the front-end team"
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "company": "Coffeeroasters",
+    "logo": "./assets/logos/coffeeroasters.svg",
+    "logoBackground": "hsl(29, 60%, 87%)",
+    "position": "Senior Frontend Developer",
+    "postedAt": "1w ago",
+    "contract": "Part Time",
+    "location": "Singapore",
+    "website": "https://example.com/coffeeroasters",
+    "apply": "https://example.com/coffeeroasters/apply",
+    "description": "We’re looking for an experienced Frontend Developer with an eye for Product Design along with a honed set of coding skills and who shares our values around technology. Most importantly, we’d like someone who is collaborative and can work closely with the rest of our team shaping product.",
+    "requirements": {
+      "content": "You will be responsible for executing high quality solutions for customers and contributing to the day-to-day technical excellence of a delivery team. You should have a deep understanding of Modern JavaScript, HTML and CSS, the software development life cycle, and possess the ability to implement and execute standard software architecture patterns.",
+      "items": [
+        "4+ years of experience of Frontend Development",
+        "Expertise with React required",
+        "Expertise with Next.js, Apollo, Typescript, and GraphQL preferred"
+      ]
+    },
+    "role": {
+      "content": "Beyond working closely with our team to build an exciting app, you’ll be leading Frontend development of our React/Next.js product. You’ll be coming up with UI/UX for the app and making architectural decisions for the frontend.",
+      "items": [
+        "Use your thorough understanding of core client-side technologies to architect complex user interactions for desktop and mobile browsers using React",
+        "Create universal JS modules to be used on both the client and the server",
+        "Lead, direct and mentor more junior team members (including code review)",
+        "Cover your code with unit and integration tests written with Jest and Mocha",
+        "Take part in decision-making around major architectural choices of the front-end team"
+      ]
+    }
   }
 ]

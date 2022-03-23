@@ -20,7 +20,7 @@ const JobCard = ({
   location,
 }: Props) => {
   return (
-    <div className="relative bg-white rounded-md p-8 pt-12 ">
+    <div className="relative border-4 border-orange-600 self-start bg-white rounded-md p-8 pt-12 ">
       <div
         style={{ backgroundColor: logoBackground }}
         className="absolute top-0 -translate-y-1/2  w-14 h-14 flex items-center rounded-2xl"
@@ -32,7 +32,7 @@ const JobCard = ({
           alt="company logo"
         />
       </div>
-      <div className="h-full">
+      <div>
         {/* Main Card Content */}
         <div className="mb-11">
           <div className="flex mb-4">
