@@ -32,7 +32,7 @@ const JobCard = ({
           alt="company logo"
         />
       </div>
-      <div className=" border-2 border-orange-500 h-full">
+      <div className="h-full">
         {/* Main Card Content */}
         <div className="mb-11">
           <div className="flex mb-4">

@@ -4,10 +4,10 @@ import Content from "./content";
 import Header from "./header";
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="flex flex-col">
-      <Header />
-      <div className="flex content-area h-full">
-        <Sidebar></Sidebar>
+    <div className="flex h-screen">
+      <Sidebar />
+      <div className="flex-1 flex flex-col h-full">
+        <Header />
         <Content>{children}</Content>
       </div>
     </div>

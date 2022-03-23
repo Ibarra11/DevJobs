@@ -1,14 +1,16 @@
-import Search from "./search";
+import SearchBar from "../searchBar";
+import MobileTabletSearchbar from "../mobileTabletSearchbar";
+import { ImMenu } from "react-icons/im";
 const Header = () => {
   return (
-    <div className="bg-white h-16 flex shadow-2xl">
-      <div className="w-80">
-        <h1>DevJobs</h1>
+    <div className="bg-white h-20 flex  px-4 lg:px-0  drop-shadow-lg">
+      <div className="flex items-center lg:hidden">
+        <button className="p-4">
+          <ImMenu size={24} />
+        </button>
       </div>
-      <div className=" flex flex-1 items-center ">
-        <Search />
-      </div>
-      <div className="w-52">Filters</div>
+      <SearchBar />
+      <MobileTabletSearchbar />
     </div>
   );
 };

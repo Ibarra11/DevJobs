@@ -18,7 +18,7 @@ interface Job {
 }
 const JobList = ({ jobs }: { jobs: Job[] }) => {
   return (
-    <div className="h-full  grid grid-cols-4 gap-16  ">
+    <div className="h-full py-12 px-12 grid grid-cols-1 md:grid-cols-2  xl:grid-cols-3 gap-12 md:gap-12 lg:gap-16  ">
       {jobs.map((job) => (
         <JobCard key={job.id} {...job} />
       ))}
