@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .content-area {
-  height: calc(100vh - theme(spacing.16));
+  height: calc(100% - theme(spacing.16));
 }

@@ -25,8 +25,8 @@ const Home: NextPage = () => {
   }, [currentPage]);
 
   return (
-    <div className=" h-full flex flex-col px-12 pt-8  border-8">
-      <div className="h-3/4 border-4 overflow-hidden">
+    <div className="h-full flex flex-col px-12 pt-8">
+      <div className="content-area">
         <JobList jobs={currentJobs} />
       </div>
       <div className="h-16 flex items-center justify-center  ">
