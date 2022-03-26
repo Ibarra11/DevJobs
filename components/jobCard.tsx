@@ -2,8 +2,6 @@ import Image from "next/image";
 interface Props {
   id: number;
   company: string;
-  logo: string;
-  logoBackground: string;
   position: string;
   postedAt: string;
   contract: string;
@@ -12,8 +10,7 @@ interface Props {
 const JobCard = ({
   id,
   company,
-  logo,
-  logoBackground,
+
   position,
   postedAt,
   contract,
@@ -21,16 +18,13 @@ const JobCard = ({
 }: Props) => {
   return (
     <div className=" relative max-h-64  bg-white rounded-md p-8 pt-12 ">
-      <div
-        style={{ backgroundColor: logoBackground }}
-        className="absolute top-0 -translate-y-1/2  w-14 h-14 flex items-center rounded-2xl"
-      >
-        <Image
-          src={logo.replace(/.\/assets/, "/images")}
+      <div className="absolute top-0 -translate-y-1/2  w-14 h-14 flex items-center rounded-2xl">
+        {/* <Image
+          // src={logo.replace(/.\/assets/, "/images")}
           width={21}
           height={17}
           alt="company logo"
-        />
+        /> */}
       </div>
       <div>
         {/* Main Card Content */}
