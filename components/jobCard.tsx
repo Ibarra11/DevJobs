@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+
 interface Props {
   id: number;
   company: string;
@@ -10,7 +12,6 @@ interface Props {
 const JobCard = ({
   id,
   company,
-
   position,
   postedAt,
   contract,
@@ -41,6 +42,9 @@ const JobCard = ({
         </div>
         <p className=" text-sm">{location}</p>
       </div>
+      <Link href={`job/${id}`}>
+        <a>View Job</a>
+      </Link>
     </div>
   );
 };

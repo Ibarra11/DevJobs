@@ -20,5 +20,6 @@ type Job {
 }
 
 type Query {
+  job(id: Int!): Job
   jobs: [Job]!
 }

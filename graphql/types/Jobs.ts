@@ -1,4 +1,8 @@
-import { objectType, extendType } from "nexus";
+import { objectType, extendType, intArg, core, nonNull } from "nexus";
+
+function requiredInt(description?: string) {
+  return nonNull(intArg());
+}
 
 export const Job = objectType({
   name: "Job",
@@ -27,6 +31,23 @@ export const JobsQuery = extendType({
       type: "Job",
       resolve(_parent, _args, ctx) {
         return ctx.prisma.job.findMany();
+      },
+    });
+    t.field("job", {
+      type: "Job",
+      args: { id: requiredInt() },
+      async resolve(root, args, ctx) {
+        const { id } = args;
+        const job = await ctx.prisma.job.findUnique({
+          where: {
+            id: id,
+          },
+        });
+        console.log(job);
+        if (job) {
+          return job;
+        }
+        throw new Error("No job listing found");
       },
     });
   },

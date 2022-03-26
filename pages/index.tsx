@@ -50,8 +50,6 @@ const Home: NextPage = () => {
     }
   };
 
-  console.log(currentJobs);
-
   return (
     <div className="h-full flex flex-col px-12 pt-8">
       <div className="content-area">
