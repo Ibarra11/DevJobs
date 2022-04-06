@@ -1,16 +1,27 @@
 import { useState, FormEvent } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
+import { formatApolloErrors } from "apollo-server-errors";
 type FormFields = "email" | "password";
-type FormErrors = {
-  fields: {
-    email?: { message: string };
-    password?: { message: string };
-  };
-  mutations: {
-    addUser?: { message: string };
+type ErrorState = {
+  type: "Error";
+  Errors: {
+    fields: {
+      email?: { message: string };
+      password?: { message: string };
+    };
+    actions: { type: "login" | "signup"; message: string } | null;
   };
 };
+type PendingState = {
+  type: "Pending";
+};
+
+type IdleState = {
+  type: "Idle";
+};
+
+type FormState = ErrorState | PendingState | IdleState;
 
 const ADD_NEW_USER = gql`
   mutation AddNewUser($input: CredentialsInputType!) {
@@ -34,10 +45,8 @@ const GET_USER = gql`
 
 export default function Signin() {
   const router = useRouter();
-  const [formErrors, setFormErrors] = useState<FormErrors>({
-    fields: {},
-    mutations: {},
-  });
+  const [formState, setFormState] = useState<FormState>({ type: "Idle" });
+
   const [formType, setFormType] = useState<"login" | "signup">("login");
   const [formFields, setFormFields] = useState<Record<FormFields, string>>({
     email: "",
@@ -48,20 +57,28 @@ export default function Signin() {
   );
   const [createUser, { data, loading }] = useMutation(ADD_NEW_USER, {
     onError: (err: Error) => {
-      console.log(err.message);
-      setFormErrors({
-        ...formErrors,
-        mutations: { addUser: { message: err.message } },
+      setFormState({
+        type: "Error",
+        Errors: {
+          fields: {},
+          actions: { type: "signup", message: err.message },
+        },
       });
     },
   });
 
   const [getUser] = useMutation(GET_USER, {
     onCompleted: (data) => {
-      console.log(data);
-      if (data) {
+      if (data.getUser) {
         router.push("/");
       } else {
+        setFormState({
+          type: "Error",
+          Errors: {
+            fields: {},
+            actions: { type: "login", message: "Login Unsuccessful" },
+          },
+        });
       }
     },
     onError: (err) => {
@@ -82,7 +99,13 @@ export default function Signin() {
       errors.password = { message: "Password is Required" };
     }
     if (errors.email || errors.password) {
-      setFormErrors({ ...formErrors, fields: errors });
+      setFormState({
+        type: "Error",
+        Errors: {
+          fields: errors,
+          actions: null,
+        },
+      });
     } else {
       if (formType === "login") {
         getUser({
@@ -108,9 +131,7 @@ export default function Signin() {
         <div className="relative text-center pb-12 border-2">
           <h1 className=" text-8xl">DevJobs</h1>
           <span className="absolute text-lg text-red-500 bottom-2 left-0 right-0 m-auto  ">
-            {formErrors.mutations.addUser
-              ? formErrors.mutations.addUser.message
-              : null}
+            {formState.type === "Error" && formState.Errors.actions?.message}
           </span>
         </div>
 
@@ -148,9 +169,8 @@ export default function Signin() {
             <label className=" text-xl font-bold" htmlFor="email">
               Email:
               <span className="text-base text-red-500 ml-3">
-                {formErrors.fields.email
-                  ? formErrors.fields.email.message
-                  : null}
+                {formState.type === "Error" &&
+                  formState.Errors.fields.email?.message}
               </span>
             </label>
             <input
@@ -160,6 +180,7 @@ export default function Signin() {
               id="email"
               value={formFields.email}
               onChange={(e) => {
+                formState.type === "Error" && setFormState({ type: "Idle" });
                 setFormFields({ ...formFields, email: e.target.value });
               }}
             />
@@ -169,9 +190,8 @@ export default function Signin() {
             <label className="text-xl font-bold" htmlFor="password">
               Password:
               <span className=" ml-2 text-base text-red-500">
-                {formErrors.fields.password
-                  ? formErrors.fields.password.message
-                  : null}
+                {formState.type === "Error" &&
+                  formState.Errors.fields.password?.message}
               </span>
             </label>
             <input
@@ -181,6 +201,7 @@ export default function Signin() {
               id="password"
               value={formFields.password}
               onChange={(e) => {
+                formState.type === "Error" && setFormState({ type: "Idle" });
                 setFormFields({
                   ...formFields,
                   password: e.target.value,

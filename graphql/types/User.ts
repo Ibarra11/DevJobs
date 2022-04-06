@@ -57,7 +57,6 @@ export const UserMutations = extendType({
         args: { input: CredentialsInputType },
         async resolve(root, args, ctx) {
           const { email, password } = args.input;
-          console.log(email);
           try {
             const user = await ctx.prisma.user.findUnique({
               where: {
@@ -77,7 +76,6 @@ export const UserMutations = extendType({
             }
           } catch (e) {
             if (e instanceof Error) {
-              console.log(e.message);
               throw new Error("Login unsucessful");
             }
           }
