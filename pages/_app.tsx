@@ -3,12 +3,27 @@ import type { AppProps } from "next/app";
 import Layout from "../components/layout";
 import { ApolloProvider } from "@apollo/client";
 import apolloClient from "../lib/apollo";
-function MyApp({ Component, pageProps }: AppProps) {
+import { NextPage } from "next";
+import { ReactElement, ReactNode } from "react";
+
+type NextPageWithAuth = NextPage & {
+  auth?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithAuth = AppProps & {
+  Component: NextPageWithAuth;
+};
+
+function MyApp({ Component, pageProps, router }: AppPropsWithAuth) {
   return (
     <ApolloProvider client={apolloClient}>
-      <Layout>
+      {Component.auth ? (
         <Component {...pageProps} />
-      </Layout>
+      ) : (
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      )}
     </ApolloProvider>
   );
 }

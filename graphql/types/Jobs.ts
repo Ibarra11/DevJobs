@@ -43,7 +43,6 @@ export const JobsQuery = extendType({
             id: id,
           },
         });
-        console.log(job);
         if (job) {
           return job;
         }

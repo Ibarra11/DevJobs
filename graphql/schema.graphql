@@ -2,6 +2,11 @@
 ### Do not make changes to this file directly
 
 
+input CredentialsInputType {
+  email: String!
+  password: String!
+}
+
 type Job {
   apply: String
   company: String
@@ -19,7 +24,18 @@ type Job {
   website: String
 }
 
+type Mutation {
+  addNewUser(input: CredentialsInputType!): User!
+  getUser(input: CredentialsInputType!): User
+}
+
 type Query {
   job(id: Int!): Job
   jobs: [Job]!
+}
+
+type User {
+  createdAt: String!
+  email: String!
+  id: Int!
 }
