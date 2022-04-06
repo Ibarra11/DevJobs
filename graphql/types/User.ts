@@ -8,7 +8,8 @@ export const User = objectType({
   definition(t) {
     t.nonNull.int("id"),
       t.nonNull.string("email"),
-      t.nonNull.string("createdAt");
+      t.nonNull.string("createdAt"),
+      t.nonNull.string("role");
   },
 });
 
@@ -16,7 +17,9 @@ export const CredentialsInputType = nonNull(
   inputObjectType({
     name: "CredentialsInputType",
     definition(t) {
-      t.nonNull.string("email"), t.nonNull.string("password");
+      t.nonNull.string("email"),
+        t.nonNull.string("password"),
+        t.nonNull.string("role");
     },
   })
 );
@@ -29,16 +32,18 @@ export const UserMutations = extendType({
       args: { input: CredentialsInputType },
       async resolve(root, args, ctx) {
         const saltRounds = 10;
-        const { email, password } = args.input;
-        let user: { id: number; email: string; createdAt: Date };
+        const { email, password, role } = args.input;
+        let user: { id: number; email: string; createdAt: Date; role: string };
         try {
           const hash = await bcrypt.hash(password, saltRounds);
           user = await prisma.user.create({
             data: {
               email,
               password: hash,
+              role,
             },
           });
+          console.log(user);
 
           return user;
         } catch (e) {

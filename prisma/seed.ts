@@ -27,14 +27,14 @@ async function main() {
     })
   );
 
-  const user = await prisma.user.upsert({
-    where: { email: "user@test.com" },
-    update: {},
-    create: {
-      email: "user@test.com",
-      password: "test",
-    },
-  });
+  // const user = await prisma.user.upsert({
+  //   where: { email: "user@test.com" },
+  //   update: {},
+  //   create: {
+  //     email: "user@test.com",
+  //     password: "test",
+  //   },
+  // });
 }
 
 main()

@@ -16,6 +16,12 @@ model User {
   createdAt DateTime @default(now())
   email     String   @unique
   password  String
+  role      Role     @default(DEVELOPER)
+}
+
+enum Role {
+  DEVELOPER
+  EMPLOYER
 }
 
 model Job {

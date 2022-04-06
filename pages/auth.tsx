@@ -52,8 +52,8 @@ export default function Signin() {
     email: "",
     password: "",
   });
-  const [userType, setUserType] = useState<"developer" | "employer">(
-    "developer"
+  const [userType, setUserType] = useState<"DEVELOPER" | "EMPLOYER">(
+    "DEVELOPER"
   );
   const [createUser, { data, loading }] = useMutation(ADD_NEW_USER, {
     onError: (err: Error) => {
@@ -118,7 +118,7 @@ export default function Signin() {
         });
       } else {
         createUser({
-          variables: { input: { email, password } },
+          variables: { input: { email, password, role: userType } },
         });
       }
     }
@@ -138,11 +138,11 @@ export default function Signin() {
         <div className="flex text-center">
           <div
             className={`border-2 flex-1  text-2xl ${
-              userType === "developer" ? "bg-teal-400" : null
+              userType === "DEVELOPER" ? "bg-teal-400" : null
             }`}
           >
             <button
-              onClick={() => setUserType("developer")}
+              onClick={() => setUserType("DEVELOPER")}
               className="py-3 w-full"
             >
               Developer
@@ -150,11 +150,11 @@ export default function Signin() {
           </div>
           <div
             className={`border-2 flex-1  text-2xl ${
-              userType === "employer" ? "bg-teal-400" : null
+              userType === "EMPLOYER" ? "bg-teal-400" : null
             }`}
           >
             <button
-              onClick={() => setUserType("employer")}
+              onClick={() => setUserType("EMPLOYER")}
               className="py-3 w-full"
             >
               Employer

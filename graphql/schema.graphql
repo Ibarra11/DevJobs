@@ -5,6 +5,7 @@
 input CredentialsInputType {
   email: String!
   password: String!
+  role: String!
 }
 
 type Job {
@@ -38,4 +39,5 @@ type User {
   createdAt: String!
   email: String!
   id: Int!
+  role: String!
 }
