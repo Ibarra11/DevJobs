@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+
 import type { AppProps } from "next/app";
 import Layout from "../components/layout";
 import { ApolloProvider } from "@apollo/client";
@@ -14,7 +15,7 @@ type AppPropsWithAuth = AppProps & {
   Component: NextPageWithAuth;
 };
 
-function MyApp({ Component, pageProps, router }: AppPropsWithAuth) {
+function MyApp({ Component, pageProps }: AppPropsWithAuth) {
   return (
     <ApolloProvider client={apolloClient}>
       {Component.auth ? (

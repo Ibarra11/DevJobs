@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { gql, useQuery } from "@apollo/client";
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
+import { withSessionSsr } from "../lib/session";
 import JobList from "../components/jobList";
 import Pagination from "../components/pagination";
 interface Job {
@@ -31,7 +32,6 @@ const Home: NextPage = () => {
   const [currentJobs, setCurrentJobs] = useState<Job[] | null>(null);
 
   useEffect(() => {
-    console.log(jobList?.jobs);
     setCurrentJobs(
       jobList?.jobs.slice((currentPage - 1) * offset, offset * currentPage)
     );
@@ -67,4 +67,21 @@ const Home: NextPage = () => {
   );
 };
 
+export const getServerSideProps = withSessionSsr(
+  async function getServerSideProps({ req }) {
+    console.log(req.session);
+    const user = req.session.user;
+    if (!user) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
+    return {
+      props: {},
+    };
+  }
+);
 export default Home;
