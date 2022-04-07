@@ -1,7 +1,7 @@
-import { useState, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { formatApolloErrors } from "apollo-server-errors";
+
 type FormFields = "email" | "password";
 type ErrorState = {
   type: "Error";
@@ -29,6 +29,7 @@ const ADD_NEW_USER = gql`
       id
       email
       createdAt
+      role
     }
   }
 `;
@@ -39,11 +40,12 @@ const GET_USER = gql`
       id
       email
       createdAt
+      role
     }
   }
 `;
 
-export default function Signin() {
+export default function Login() {
   const router = useRouter();
   const [formState, setFormState] = useState<FormState>({ type: "Idle" });
 
@@ -55,6 +57,19 @@ export default function Signin() {
   const [userType, setUserType] = useState<"DEVELOPER" | "EMPLOYER">(
     "DEVELOPER"
   );
+
+  useEffect(() => {
+    async function fetchUser() {
+      const res = await fetch("/api/auth/user");
+      const { isLoggedIn } = await res.json();
+
+      if (isLoggedIn) {
+        router.push("/");
+      }
+    }
+    fetchUser();
+  }, [router]);
+
   const [createUser, { data, loading }] = useMutation(ADD_NEW_USER, {
     onError: (err: Error) => {
       setFormState({
@@ -244,4 +259,4 @@ export default function Signin() {
   );
 }
 
-Signin.auth = true;
+Login.auth = true;
