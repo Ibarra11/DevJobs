@@ -65,6 +65,16 @@ export default function Signin() {
         },
       });
     },
+    onCompleted: async (data) => {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user: data.addNewUser }),
+      });
+      if (res.ok) {
+        router.push("/");
+      }
+    },
   });
 
   const [getUser] = useMutation(GET_USER, {
@@ -113,6 +123,7 @@ export default function Signin() {
             input: {
               email,
               password,
+              role: userType,
             },
           },
         });

@@ -43,7 +43,6 @@ export const UserMutations = extendType({
               role,
             },
           });
-          console.log(user);
 
           return user;
         } catch (e) {
@@ -61,14 +60,15 @@ export const UserMutations = extendType({
         type: "User",
         args: { input: CredentialsInputType },
         async resolve(root, args, ctx) {
-          const { email, password } = args.input;
+          const { email, password, role } = args.input;
           try {
             const user = await ctx.prisma.user.findUnique({
               where: {
                 email: email,
+                role,
               },
             });
-            console.log(user);
+
             // there is no user with that email, return null
             if (!user) {
               return null;
