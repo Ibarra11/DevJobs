@@ -30,6 +30,11 @@ export const JobsQuery = extendType({
     t.nonNull.list.field("jobs", {
       type: "Job",
       resolve(_parent, _args, ctx) {
+        console.log("User");
+        console.log(ctx.user);
+        if (!ctx.user) {
+          throw new Error("Not authenticated");
+        }
         return ctx.prisma.job.findMany();
       },
     });
@@ -37,6 +42,9 @@ export const JobsQuery = extendType({
       type: "Job",
       args: { id: requiredInt() },
       async resolve(root, args, ctx) {
+        if (!ctx.user) {
+          throw new Error("Not authenticated");
+        }
         const { id } = args;
         const job = await ctx.prisma.job.findUnique({
           where: {
