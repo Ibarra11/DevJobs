@@ -5,6 +5,7 @@ import { withSessionSsr } from "../lib/session";
 import JobList from "../components/jobList";
 import Pagination from "../components/pagination";
 import { User } from "../graphql/types";
+
 interface Job {
   id: number;
   company: string;

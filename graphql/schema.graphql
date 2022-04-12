@@ -9,20 +9,20 @@ input CredentialsInputType {
 }
 
 type Job {
-  apply: String
-  company: String
-  contract: String
-  id: Int
-  jobDescription: String
-  jobRequirementContent: String
-  jobRequirementList: [String]
-  jobRoleContent: String
-  jobRoleList: [String]
-  location: String
-  logoUrl: String
-  position: String
-  postedAt: String
-  website: String
+  apply: String!
+  company: String!
+  contract: String!
+  id: Int!
+  jobDescription: String!
+  jobRequirementContent: String!
+  jobRequirementList: [String!]!
+  jobRoleContent: String!
+  jobRoleList: [String!]!
+  location: String!
+  logoUrl: String!
+  position: String!
+  postedAt: String!
+  website: String!
 }
 
 type Mutation {

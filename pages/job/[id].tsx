@@ -1,5 +1,9 @@
 import { useRouter } from "next/router";
-import { useQuery, gql } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { useJobQuery } from "../../graphql/generated";
+import { GetServerSideProps } from "next";
+import { InferGetServerSidePropsType } from "next";
+
 const GET_JOB = gql`
   query Job($id: Int!) {
     job(id: $id) {
@@ -19,18 +23,25 @@ const GET_JOB = gql`
     }
   }
 `;
-const JobDetailView = () => {
+const JobDetailView = ({
+  jobId,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  const jobId = router.query.id ? +router.query.id : undefined;
 
-  const { data, loading, error } = useQuery(GET_JOB, {
-    variables: { id: jobId },
-  });
-
+  const { data, loading, error } = useJobQuery({ variables: { id: jobId } });
+  if (loading) return <p>Loading</p>;
   if (error) {
     router.push("/");
   }
-  if (loading) return <p>Loading</p>;
+  if (!data) {
+    router.push("/");
+    return;
+  }
+  // there is a possibility of the query returning null
+  if (!data.job) {
+    router.push("/");
+    return;
+  }
 
   const { job } = data;
 
@@ -116,5 +127,23 @@ function JobSectionJSX({
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<{ jobId: number }> = async (
+  context
+) => {
+  const id = context.query.id;
+  if (typeof id !== "string") {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+
+  return {
+    props: { jobId: +id },
+  };
+};
 
 export default JobDetailView;

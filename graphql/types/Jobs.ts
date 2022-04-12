@@ -7,20 +7,20 @@ function requiredInt(description?: string) {
 export const Job = objectType({
   name: "Job",
   definition(t) {
-    t.int("id"),
-      t.string("company"),
-      t.string("logoUrl"),
-      t.string("position"),
-      t.string("postedAt"),
-      t.string("contract"),
-      t.string("location"),
-      t.string("website"),
-      t.string("apply"),
-      t.string("jobDescription"),
-      t.string("jobRequirementContent"),
-      t.list.string("jobRequirementList"),
-      t.string("jobRoleContent"),
-      t.list.string("jobRoleList");
+    t.nonNull.int("id"),
+      t.nonNull.string("company"),
+      t.nonNull.string("logoUrl"),
+      t.nonNull.string("position"),
+      t.nonNull.string("postedAt"),
+      t.nonNull.string("contract"),
+      t.nonNull.string("location"),
+      t.nonNull.string("website"),
+      t.nonNull.string("apply"),
+      t.nonNull.string("jobDescription"),
+      t.nonNull.string("jobRequirementContent"),
+      t.nonNull.list.nonNull.string("jobRequirementList"),
+      t.nonNull.string("jobRoleContent"),
+      t.nonNull.list.nonNull.string("jobRoleList");
   },
 });
 
