@@ -72,31 +72,49 @@ const JobDetailView = () => {
         <div>
           <p className=" leading-7">{job.jobDescription}</p>
         </div>
-        <div className="flex flex-col gap-6">
-          <h5 className=" text-xl">Requirements</h5>
-          <p className="leading-7">{job.jobRequirementContent}</p>
-          <ul className="list-disc list-inside">
-            {job.jobRequirementList.map((requirement: string) => {
-              return (
-                <li className="pb-2" key={`${job.id}-${requirement}`}>
-                  {requirement}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="flex flex-col gap-6">
-          <h5 className="text-xl">What You Will Do</h5>
-          <p className="leading-7">{job.jobRoleContent}</p>
-          <ul className=" list-decimal list-inside">
-            {job.jobRoleList.map((jobRole: string) => {
-              return <li key={`${job.id}-${jobRole}`}>{jobRole}</li>;
-            })}
-          </ul>
-        </div>
+        {JobSectionJSX({
+          heading: "Requirements",
+          content: job.jobRequirementContent,
+          list: job.jobRequirementList,
+          styleType: "disc",
+        })}
+        {JobSectionJSX({
+          heading: "What You Will Do",
+          content: job.jobRoleContent,
+          list: job.jobRoleList,
+          styleType: "decimal",
+        })}
       </div>
     </div>
   );
 };
+
+function JobSectionJSX({
+  heading,
+  content,
+  list,
+  styleType = "disc",
+}: {
+  heading: string;
+  content: string;
+  list: string[];
+  styleType: "disc" | "decimal";
+}) {
+  return (
+    <div className="flex flex-col gap-6">
+      <h5 className="text-xl">{heading}</h5>
+      <p className="leading-7">{content}</p>
+      <ul
+        className={` ${
+          styleType === "disc" ? "list-disc" : "list-decimal"
+        } list-inside`}
+      >
+        {list.map((item: string, index: number) => {
+          return <li key={`${item}-${index}`}>{item}</li>;
+        })}
+      </ul>
+    </div>
+  );
+}
 
 export default JobDetailView;
