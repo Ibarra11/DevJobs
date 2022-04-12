@@ -8,8 +8,6 @@ export type Context = {
 };
 
 export async function createContext({ req, res }: any): Promise<Context> {
-  // console.log("Context");
-  // console.log(req.session.user);
   return {
     prisma,
     user: req.session?.user,

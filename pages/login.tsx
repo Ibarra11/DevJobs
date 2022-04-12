@@ -152,10 +152,20 @@ export default function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen bg-green-600">
-      <div className="w-1/4  bg-white rounded-lg p-8 pb-0">
+    <div className="flex  h-screen ">
+      <div className=" bg-hero bg-cover flex items-center justify-center flex-1">
+        <div className=" border-2 text-white w-1/2 text-center border-red-400">
+          <h1 className="text-8xl ">DevJobs</h1>
+          <h3 className=" text-4xl">Jobs for Developers, by Developers</h3>
+          <ul>
+            <li>Access to over 100 jobs</li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+      </div>
+      <div className="w-2/6 bg-white rounded-lg p-8 pb-0">
         <div className="relative text-center pb-12 border-2">
-          <h1 className=" text-8xl">DevJobs</h1>
           <span className="absolute text-lg text-red-500 bottom-2 left-0 right-0 m-auto  ">
             {formState.type === "Error" && formState.Errors.actions?.message}
           </span>

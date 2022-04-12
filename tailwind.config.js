@@ -21,6 +21,9 @@ module.exports = {
       fontFamily: {
         serif: ["Kumbh Sans", ...defaultTheme.fontFamily.serif],
       },
+      backgroundImage: {
+        hero: "linear-gradient(to right bottom, rgba(8, 159, 143, 0.75), rgba(8, 159, 143,0.75)), url('../public/hero.jpg')",
+      },
     },
   },
   plugins: [],
