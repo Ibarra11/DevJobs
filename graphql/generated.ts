@@ -58,7 +58,7 @@ export type MutationGetUserArgs = {
 export type Query = {
   __typename?: 'Query';
   job?: Maybe<Job>;
-  jobs: Array<Maybe<Job>>;
+  jobs: Array<Job>;
 };
 
 
@@ -74,10 +74,10 @@ export type User = {
   role: Scalars['String'];
 };
 
-export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+export type JobsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Unnamed_1_Query = { __typename?: 'Query', jobs: Array<{ __typename?: 'Job', id: number, postedAt: string, contract: string, company: string, position: string, location: string } | null> };
+export type JobsQuery = { __typename?: 'Query', jobs: Array<{ __typename?: 'Job', id: number, postedAt: string, contract: string, company: string, position: string, location: string }> };
 
 export type JobQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -101,8 +101,8 @@ export type GetUserMutationVariables = Exact<{
 export type GetUserMutation = { __typename?: 'Mutation', getUser?: { __typename?: 'User', id: number, email: string, createdAt: string, role: string } | null };
 
 
-export const Document = gql`
-    {
+export const JobsDocument = gql`
+    query Jobs {
   jobs {
     id
     postedAt
@@ -115,31 +115,31 @@ export const Document = gql`
     `;
 
 /**
- * __useQuery__
+ * __useJobsQuery__
  *
- * To run a query within a React component, call `useQuery` and pass it any options that fit your needs.
- * When your component renders, `useQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useJobsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useJobsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useQuery({
+ * const { data, loading, error } = useJobsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useQuery(baseOptions?: Apollo.QueryHookOptions<Query, QueryVariables>) {
+export function useJobsQuery(baseOptions?: Apollo.QueryHookOptions<JobsQuery, JobsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<Query, QueryVariables>(Document, options);
+        return Apollo.useQuery<JobsQuery, JobsQueryVariables>(JobsDocument, options);
       }
-export function useLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Query, QueryVariables>) {
+export function useJobsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<JobsQuery, JobsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<Query, QueryVariables>(Document, options);
+          return Apollo.useLazyQuery<JobsQuery, JobsQueryVariables>(JobsDocument, options);
         }
-export type QueryHookResult = ReturnType<typeof useQuery>;
-export type LazyQueryHookResult = ReturnType<typeof useLazyQuery>;
-export type QueryResult = Apollo.QueryResult<Query, QueryVariables>;
+export type JobsQueryHookResult = ReturnType<typeof useJobsQuery>;
+export type JobsLazyQueryHookResult = ReturnType<typeof useJobsLazyQuery>;
+export type JobsQueryResult = Apollo.QueryResult<JobsQuery, JobsQueryVariables>;
 export const JobDocument = gql`
     query Job($id: Int!) {
   job(id: $id) {

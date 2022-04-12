@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { gql, useQuery } from "@apollo/client";
 import type { GetServerSideProps, NextPage } from "next";
+import { useJobsQuery } from "../graphql/generated";
 import { withSessionSsr } from "../lib/session";
 import JobList from "../components/jobList";
+
 import Pagination from "../components/pagination";
 import { User } from "../graphql/types";
-
 interface Job {
   id: number;
   company: string;
@@ -17,7 +18,7 @@ interface Job {
 
 const offset = 9;
 const ALL_JOBS_QUERY = gql`
-  query {
+  query Jobs {
     jobs {
       id
       postedAt
@@ -37,9 +38,36 @@ const Home: NextPage<{
   };
   onLayoutChange(arg: "DEV" | "EMP"): void;
 }> = ({ user, onLayoutChange }) => {
-  const { data: jobList, loading, error } = useQuery(ALL_JOBS_QUERY);
+  const { data, loading, error } = useJobsQuery();
   const [currentPage, setCurrentPage] = useState(1);
   const [currentJobs, setCurrentJobs] = useState<Job[] | null>(null);
+
+  useEffect(() => {
+    setCurrentJobs(
+      jobList?.slice((currentPage - 1) * offset, offset * currentPage)
+    );
+  }, [currentPage, data]);
+
+  if (loading) {
+    return <p>loading</p>;
+  }
+  if (error) {
+    return <p>Error</p>;
+  }
+
+  if (!data) {
+    return <p>No data</p>;
+  }
+
+  const changePage = (direction: "previous" | "next") => {
+    if (direction === "previous") {
+      setCurrentPage((page) => page - 1);
+    } else {
+      setCurrentPage((page) => page + 1);
+    }
+  };
+
+  const jobList = data.jobs;
 
   // if (user.role === "EMPLOYER") {
   //   onLayoutChange("EMP");
@@ -49,25 +77,6 @@ const Home: NextPage<{
   //   return <p>Developer</p>;
   // }
 
-  useEffect(() => {
-    setCurrentJobs(
-      jobList?.jobs.slice((currentPage - 1) * offset, offset * currentPage)
-    );
-  }, [currentPage, jobList]);
-  if (error) {
-    return <div>error</div>;
-  }
-  if (loading) {
-    return <div>Loading</div>;
-  }
-  const changePage = (direction: "previous" | "next") => {
-    if (direction === "previous") {
-      setCurrentPage((page) => page - 1);
-    } else {
-      setCurrentPage((page) => page + 1);
-    }
-  };
-
   return (
     <div className="h-full flex flex-col px-12 pt-8">
       <div className="content-area">
@@ -75,7 +84,7 @@ const Home: NextPage<{
       </div>
       <div className="h-16 flex items-center justify-center  ">
         <Pagination
-          totalCount={jobList.jobs.length}
+          totalCount={jobList.length}
           offset={9}
           currentPage={currentPage}
           onPageChange={changePage}
@@ -87,7 +96,6 @@ const Home: NextPage<{
 
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req }) {
-    console.log(req.session.user);
     const user = req.session.user;
     if (!user) {
       return {
