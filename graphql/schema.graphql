@@ -32,7 +32,7 @@ type Mutation {
 
 type Query {
   job(id: Int!): Job
-  jobs: [Job]!
+  jobs: [Job!]!
 }
 
 type User {

@@ -92,7 +92,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     job: NexusGenRootTypes['Job'] | null; // Job
-    jobs: Array<NexusGenRootTypes['Job'] | null>; // [Job]!
+    jobs: NexusGenRootTypes['Job'][]; // [Job!]!
   }
   User: { // field return type
     createdAt: string; // String!

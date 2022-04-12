@@ -1,4 +1,4 @@
-import { objectType, extendType, intArg, core, nonNull } from "nexus";
+import { objectType, extendType, intArg, core, nonNull, list } from "nexus";
 
 function requiredInt(description?: string) {
   return nonNull(intArg());
@@ -28,10 +28,8 @@ export const JobsQuery = extendType({
   type: "Query",
   definition(t) {
     t.nonNull.list.field("jobs", {
-      type: "Job",
+      type: nonNull("Job"),
       resolve(_parent, _args, ctx) {
-        console.log("User");
-        console.log(ctx.user);
         if (!ctx.user) {
           throw new Error("Not authenticated");
         }
