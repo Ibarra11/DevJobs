@@ -3,7 +3,6 @@ import { schema } from "../../graphql/schema";
 import { createContext } from "../../graphql/context";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "../../lib/session";
-import path from "path";
 
 import Cors from "micro-cors";
 

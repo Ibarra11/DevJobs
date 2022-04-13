@@ -121,7 +121,19 @@ function JobSectionJSX({
         } list-inside`}
       >
         {list.map((item: string, index: number) => {
-          return <li key={`${item}-${index}`}>{item}</li>;
+          return (
+            <>
+              <li className="relative" key={`${item}-${index}`}>
+                <span
+                  className={`absolute ${
+                    styleType === "decimal" ? "left-7" : "left-8"
+                  }`}
+                >
+                  {item}
+                </span>
+              </li>
+            </>
+          );
         })}
       </ul>
     </div>

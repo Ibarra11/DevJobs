@@ -33,7 +33,12 @@ export const UserMutations = extendType({
       async resolve(root, args, ctx) {
         const saltRounds = 10;
         const { email, password, role } = args.input;
-        let user: { id: number; email: string; createdAt: Date; role: string };
+        let user: {
+          id: number;
+          email: string;
+          createdAt: Date;
+          role: "DEVELOPER" | "EMPLOYER";
+        };
         try {
           const hash = await bcrypt.hash(password, saltRounds);
           user = await prisma.user.create({
