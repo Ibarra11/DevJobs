@@ -1,4 +1,5 @@
 import { FaHome, FaSave, FaArchive } from "react-icons/fa";
+import Link from "next/link";
 // hover:[background-color:#52A7CD]
 // #F0F1EF
 const Sidebar = () => {
@@ -12,11 +13,15 @@ const Sidebar = () => {
       </div>
       <div className="pt-6 ">
         <ul className="flex flex-col gap-4 text-2xl">
-          <li className="group flex gap-8 items-center py-3 px-4 hover:bg-slate-600 hover:cursor-pointer">
-            <div>
-              <FaHome className="group-hover:[color:red]" size={24} />
-            </div>
-            <p className="text-2xl group-hover:text-white">Home</p>
+          <li>
+            <Link href="/">
+              <a className="flex gap-8 items-center py-3 px-4 hover:bg-slate-600 hover:cursor-pointer">
+                <div>
+                  <FaHome className="group-hover:[color:red]" size={24} />
+                </div>
+                <p className="text-2xl group-hover:text-white">Home</p>
+              </a>
+            </Link>
           </li>
           <li className="flex gap-8 items-center py-3 px-4 hover:bg-slate-600 hover:cursor-pointer">
             <div>
