@@ -1,20 +1,10 @@
 import { useState, useEffect } from "react";
-import { gql, useQuery } from "@apollo/client";
-import type { GetServerSideProps, NextPage } from "next";
-import { useJobsQuery } from "../graphql/generated";
+import { gql } from "@apollo/client";
+import type { InferGetServerSidePropsType, NextPage } from "next";
+import { useJobsQuery, JobsQuery } from "../graphql/generated";
 import { withSessionSsr } from "../lib/session";
 import JobList from "../components/jobList";
-
 import Pagination from "../components/pagination";
-import { User } from "../graphql/types";
-interface Job {
-  id: number;
-  company: string;
-  position: string;
-  postedAt: string;
-  contract: string;
-  location: string;
-}
 
 const offset = 9;
 const ALL_JOBS_QUERY = gql`
@@ -37,10 +27,16 @@ const Home: NextPage<{
     role: "DEVELOPER" | "EMPLOYER";
   };
   onLayoutChange(arg: "DEV" | "EMP"): void;
-}> = ({ user, onLayoutChange }) => {
+}> = ({
+  user,
+  onLayoutChange,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data, loading, error } = useJobsQuery();
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentJobs, setCurrentJobs] = useState<Job[] | null>(null);
+  const [currentJobs, setCurrentJobs] = useState<JobsQuery["jobs"] | null>(
+    null
+  );
 
   useEffect(() => {
     setCurrentJobs(
