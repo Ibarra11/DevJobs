@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { useJobQuery } from "../../graphql/generated";
 import { GetServerSideProps } from "next";
 import { InferGetServerSidePropsType } from "next";
@@ -23,12 +23,18 @@ const GET_JOB = gql`
     }
   }
 `;
+
+// const APPLYING_JOB = gql`
+//   mutation ApplyingJob($id: id!){
+
+//   }
+// `
 const JobDetailView = ({
   jobId,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const router = useRouter();
-
   const { data, loading, error } = useJobQuery({ variables: { id: jobId } });
+
+  const router = useRouter();
   if (loading) return <p>Loading</p>;
   if (error) {
     router.push("/");

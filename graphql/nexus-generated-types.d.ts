@@ -5,8 +5,23 @@
 
 
 import type { Context } from "./context"
-
-
+import type { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    date<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    date<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+  }
+}
 
 
 declare global {
@@ -17,11 +32,12 @@ export interface NexusGenInputs {
   CredentialsInputType: { // input type
     email: string; // String!
     password: string; // String!
-    role: string; // String!
+    role: NexusGenEnums['role']; // role!
   }
 }
 
 export interface NexusGenEnums {
+  role: "DEVELOPER" | "EMPLOYER"
 }
 
 export interface NexusGenScalars {
@@ -30,6 +46,7 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
@@ -52,10 +69,10 @@ export interface NexusGenObjects {
   Mutation: {};
   Query: {};
   User: { // root type
-    createdAt: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
     id: number; // Int!
-    role: string; // String!
+    role: NexusGenEnums['role']; // role!
   }
 }
 
@@ -67,7 +84,7 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   Job: { // field return type
@@ -95,10 +112,10 @@ export interface NexusGenFieldTypes {
     jobs: NexusGenRootTypes['Job'][]; // [Job!]!
   }
   User: { // field return type
-    createdAt: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
     id: number; // Int!
-    role: string; // String!
+    role: NexusGenEnums['role']; // role!
   }
 }
 
@@ -128,10 +145,10 @@ export interface NexusGenFieldTypeNames {
     jobs: 'Job'
   }
   User: { // field return type name
-    createdAt: 'String'
+    createdAt: 'DateTime'
     email: 'String'
     id: 'Int'
-    role: 'String'
+    role: 'role'
   }
 }
 
@@ -161,7 +178,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = keyof NexusGenInputs;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 

@@ -23,11 +23,15 @@ const Sidebar = () => {
               </a>
             </Link>
           </li>
-          <li className="flex gap-8 items-center py-3 px-4 hover:bg-slate-600 hover:cursor-pointer">
-            <div>
-              <FaArchive size={24} />
-            </div>
-            <p className="text-2xl">Applied Jobs</p>
+          <li>
+            <Link href="/applied">
+              <a className="flex gap-8 items-center py-3 px-4 hover:bg-slate-600 hover:cursor-pointer">
+                <div>
+                  <FaArchive size={24} />
+                </div>
+                <p className="text-2xl">Applied Jobs</p>
+              </a>
+            </Link>
           </li>
           <li className="flex gap-8 items-center py-3 px-4 hover:bg-slate-600 hover:cursor-pointer">
             <div>

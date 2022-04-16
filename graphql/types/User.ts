@@ -1,15 +1,29 @@
 import bcrypt from "bcrypt";
 
 import { prisma } from "../../lib/prisma";
-import { objectType, extendType, nonNull, inputObjectType } from "nexus";
+import {
+  objectType,
+  extendType,
+  nonNull,
+  inputObjectType,
+  enumType,
+} from "nexus";
+
+const Role = enumType({
+  name: "role",
+  members: ["DEVELOPER", "EMPLOYER"],
+});
 
 export const User = objectType({
   name: "User",
   definition(t) {
     t.nonNull.int("id"),
       t.nonNull.string("email"),
-      t.nonNull.string("createdAt"),
-      t.nonNull.string("role");
+      t.nonNull.date("createdAt"),
+      t.nonNull.field({
+        name: Role.name,
+        type: Role,
+      });
   },
 });
 
@@ -19,7 +33,10 @@ export const CredentialsInputType = nonNull(
     definition(t) {
       t.nonNull.string("email"),
         t.nonNull.string("password"),
-        t.nonNull.string("role");
+        t.nonNull.field({
+          name: Role.name,
+          type: Role,
+        });
     },
   })
 );
@@ -48,7 +65,6 @@ export const UserMutations = extendType({
               role,
             },
           });
-
           return user;
         } catch (e) {
           if (e instanceof Error) {
@@ -58,6 +74,7 @@ export const UserMutations = extendType({
               throw new Error("User could not be added");
             }
           }
+          throw new Error("Error");
         }
       },
     }),
@@ -70,7 +87,6 @@ export const UserMutations = extendType({
             const user = await ctx.prisma.user.findUnique({
               where: {
                 email: email,
-                role,
               },
             });
 
@@ -79,15 +95,16 @@ export const UserMutations = extendType({
               return null;
             }
             const match = await bcrypt.compare(password, user.password);
-            if (match) {
+            if (match && user.role === role) {
               return user;
             } else {
               return null;
             }
-          } catch (e) {
+          } catch (e: unknown) {
             if (e instanceof Error) {
               throw new Error("Login unsucessful");
             }
+            throw new Error("Login unsuccessful");
           }
         },
       });

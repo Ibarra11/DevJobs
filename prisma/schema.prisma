@@ -12,11 +12,12 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  password  String
-  role      Role     @default(DEVELOPER)
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  email       String   @unique
+  password    String
+  role        Role     @default(DEVELOPER)
+  appliedJobs Job[]
 }
 
 enum Role {
@@ -39,4 +40,5 @@ model Job {
   jobRequirementList    String[]
   jobRoleContent        String
   jobRoleList           String[]
+  applicants            User[]
 }

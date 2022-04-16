@@ -15,9 +15,8 @@ const Layout = ({
   return (
     <div className="flex h-screen">
       {layout === "DEV" ? <Sidebar /> : <p>Employer Sidebar</p>}
-      <div className="flex-1 flex flex-col h-full">
+      <div className="flex-1 flex flex-col h-full ">
         <Header />
-
         <Content>{children}</Content>
       </div>
     </div>
