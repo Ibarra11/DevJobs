@@ -1,8 +1,5 @@
-import { objectType, extendType, intArg, core, nonNull, list } from "nexus";
-
-function requiredInt(description?: string) {
-  return nonNull(intArg());
-}
+import { objectType, extendType, nonNull } from "nexus";
+import { requiredInt } from "../helpers";
 
 export const Job = objectType({
   name: "Job",
@@ -38,7 +35,7 @@ export const JobsQuery = extendType({
     });
     t.field("job", {
       type: "Job",
-      args: { id: requiredInt() },
+      args: { id: requiredInt },
       async resolve(root, args, ctx) {
         if (!ctx.user) {
           throw new Error("Not authenticated");

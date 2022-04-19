@@ -11,22 +11,22 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-model User {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  email       String   @unique
-  password    String
-  role        Role     @default(DEVELOPER)
-  appliedJobs Job[]
-}
-
 enum Role {
   DEVELOPER
   EMPLOYER
 }
 
+model User {
+  id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @default(now())
+  email         String          @unique
+  password      String
+  role          Role            @default(DEVELOPER)
+  JobApplicants JobApplicants[]
+}
+
 model Job {
-  id                    Int      @id @default(autoincrement())
+  id                    Int             @id @default(autoincrement())
   company               String
   logoUrl               String
   position              String
@@ -40,5 +40,15 @@ model Job {
   jobRequirementList    String[]
   jobRoleContent        String
   jobRoleList           String[]
-  applicants            User[]
+  JobApplicants         JobApplicants[]
+}
+
+model JobApplicants {
+  job       Job      @relation(fields: [jobId], references: [id])
+  jobId     Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  appliedAt DateTime @default(now())
+
+  @@id([jobId, userId])
 }

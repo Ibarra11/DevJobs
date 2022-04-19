@@ -31,6 +31,7 @@ type Job {
 }
 
 type Mutation {
+  addJobToUser(jobId: Int!, userId: Int!): User!
   addNewUser(input: CredentialsInputType!): User!
   getUser(input: CredentialsInputType!): User
 }
@@ -38,13 +39,20 @@ type Mutation {
 type Query {
   job(id: Int!): Job
   jobs: [Job!]!
+  me(userId: Int!): User
 }
 
 type User {
+  appliedJobs: [UsersJobs!]!
   createdAt: DateTime!
   email: String!
   id: Int!
   role: role!
+}
+
+type UsersJobs {
+  appliedAt: DateTime
+  job: Job
 }
 
 enum role {

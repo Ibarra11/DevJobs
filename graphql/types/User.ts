@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
-
 import { prisma } from "../../lib/prisma";
+import { requiredInt } from "../helpers";
 import {
   objectType,
   extendType,
@@ -12,19 +12,6 @@ import {
 const Role = enumType({
   name: "role",
   members: ["DEVELOPER", "EMPLOYER"],
-});
-
-export const User = objectType({
-  name: "User",
-  definition(t) {
-    t.nonNull.int("id"),
-      t.nonNull.string("email"),
-      t.nonNull.date("createdAt"),
-      t.nonNull.field({
-        name: Role.name,
-        type: Role,
-      });
-  },
 });
 
 export const CredentialsInputType = nonNull(
@@ -40,6 +27,68 @@ export const CredentialsInputType = nonNull(
     },
   })
 );
+
+export const UserAppliedJobs = objectType({
+  name: "UsersJobs",
+  definition(t) {
+    t.field("job", {
+      type: "Job",
+    }),
+      t.date("appliedAt");
+  },
+});
+
+export const User = objectType({
+  name: "User",
+  definition(t) {
+    t.nonNull.int("id"),
+      t.nonNull.string("email"),
+      t.nonNull.date("createdAt"),
+      t.nonNull.field({
+        name: Role.name,
+        type: Role,
+      });
+    t.nonNull.list.nonNull.field("appliedJobs", {
+      type: "UsersJobs",
+      async resolve(parent, args, ctx) {
+        const jobs = await ctx.prisma.user.findUnique({
+          where: {
+            id: parent.id,
+          },
+          select: {
+            JobApplicants: {
+              select: {
+                job: true,
+                appliedAt: true,
+              },
+            },
+          },
+        });
+
+        return jobs ? jobs.JobApplicants : [];
+      },
+    });
+  },
+});
+
+export const UserQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.field("me", {
+      type: "User",
+      args: {
+        userId: requiredInt,
+      },
+      resolve(_, args, ctx) {
+        return ctx.prisma.user.findUnique({
+          where: {
+            id: args.userId,
+          },
+        });
+      },
+    });
+  },
+});
 
 export const UserMutations = extendType({
   type: "Mutation",
@@ -108,5 +157,37 @@ export const UserMutations = extendType({
           }
         },
       });
+    t.nonNull.field("addJobToUser", {
+      type: "User",
+      args: { userId: requiredInt, jobId: requiredInt },
+      async resolve(root, args, ctx) {
+        const { jobId, userId } = args;
+        console.log(jobId, userId);
+
+        const result = await ctx.prisma.user.update({
+          where: {
+            id: userId,
+          },
+          data: {
+            JobApplicants: {
+              create: [
+                {
+                  job: {
+                    connect: {
+                      id: jobId,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        });
+        return result;
+        // try {
+        // } catch (e: unknown) {
+        //   throw new Error("No job found");
+        // }
+      },
+    });
   },
 });

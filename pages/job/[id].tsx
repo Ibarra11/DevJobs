@@ -1,7 +1,11 @@
 import { useRouter } from "next/router";
 import { gql, useMutation } from "@apollo/client";
-import { useJobQuery } from "../../graphql/generated";
-import { GetServerSideProps } from "next";
+import {
+  useJobQuery,
+  AddJobToUserMutationFn,
+  useAddJobToUserMutation,
+} from "../../graphql/generated";
+import { withSessionSsr } from "../../lib/session";
 import { InferGetServerSidePropsType } from "next";
 
 const GET_JOB = gql`
@@ -24,17 +28,33 @@ const GET_JOB = gql`
   }
 `;
 
-// const APPLYING_JOB = gql`
-//   mutation ApplyingJob($id: id!){
-
-//   }
-// `
+const ADD_JOB_TO_USER = gql`
+  mutation AddJobToUser($jobId: Int!, $userId: Int!) {
+    addJobToUser(jobId: $jobId, userId: $userId) {
+      id
+    }
+  }
+`;
 const JobDetailView = ({
   jobId,
+  user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data, loading, error } = useJobQuery({ variables: { id: jobId } });
-
+  const [addJobMutation] = useAddJobToUserMutation({
+    onCompleted: (data) => {
+      console.log(data);
+    },
+  });
   const router = useRouter();
+
+  function handleJobApplying() {
+    addJobMutation({
+      variables: {
+        jobId: job.id,
+        userId: user.id,
+      },
+    });
+  }
   if (loading) return <p>Loading</p>;
   if (error) {
     router.push("/");
@@ -48,6 +68,12 @@ const JobDetailView = ({
     router.push("/");
     return;
   }
+
+  //  onClick={() => addJobMutation({
+  //             variables: {
+  //               jobId: job.id,
+  //               userId:
+  //           }})
 
   const { job } = data;
 
@@ -83,7 +109,9 @@ const JobDetailView = ({
             <p className=" text-sm">{job.location}</p>
           </div>
           <div className=" rounded-md border-2">
-            <button className="py-3 px-7 ">Apply Now</button>
+            <button className="py-3 px-7" onClick={handleJobApplying}>
+              Apply Now
+            </button>
           </div>
         </div>
         <div>
@@ -146,22 +174,45 @@ function JobSectionJSX({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{ jobId: number }> = async (
-  context
-) => {
-  const id = context.query.id;
-  if (typeof id !== "string") {
+type UserSession = {
+  id: number;
+  email: string;
+  role: "DEVELOPER" | "EMPLOYER";
+};
+
+export const getServerSideProps = withSessionSsr<{
+  jobId: number;
+  user: UserSession;
+}>(async function getServerSideProps({ req, query }) {
+  const user = req.session.user;
+
+  const redirect: (to: string) => {
+    destination: string;
+    permanent: boolean;
+  } = (to) => ({
+    destination: to,
+    permanent: false,
+  });
+
+  if (!user) {
     return {
-      redirect: {
-        permanent: false,
-        destination: "/",
-      },
+      redirect: redirect("/login"),
+    };
+  }
+  if (typeof query.id !== "string") {
+    return {
+      redirect: redirect("/"),
+    };
+  }
+  if (isNaN(+query.id)) {
+    return {
+      redirect: redirect("/"),
     };
   }
 
   return {
-    props: { jobId: +id },
+    props: { user, jobId: +query.id },
   };
-};
+});
 
 export default JobDetailView;

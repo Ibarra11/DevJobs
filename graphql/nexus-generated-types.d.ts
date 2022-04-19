@@ -74,6 +74,10 @@ export interface NexusGenObjects {
     id: number; // Int!
     role: NexusGenEnums['role']; // role!
   }
+  UsersJobs: { // root type
+    appliedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    job?: NexusGenRootTypes['Job'] | null; // Job
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -104,18 +108,25 @@ export interface NexusGenFieldTypes {
     website: string; // String!
   }
   Mutation: { // field return type
+    addJobToUser: NexusGenRootTypes['User']; // User!
     addNewUser: NexusGenRootTypes['User']; // User!
     getUser: NexusGenRootTypes['User'] | null; // User
   }
   Query: { // field return type
     job: NexusGenRootTypes['Job'] | null; // Job
     jobs: NexusGenRootTypes['Job'][]; // [Job!]!
+    me: NexusGenRootTypes['User'] | null; // User
   }
   User: { // field return type
+    appliedJobs: NexusGenRootTypes['UsersJobs'][]; // [UsersJobs!]!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
     id: number; // Int!
     role: NexusGenEnums['role']; // role!
+  }
+  UsersJobs: { // field return type
+    appliedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    job: NexusGenRootTypes['Job'] | null; // Job
   }
 }
 
@@ -137,23 +148,34 @@ export interface NexusGenFieldTypeNames {
     website: 'String'
   }
   Mutation: { // field return type name
+    addJobToUser: 'User'
     addNewUser: 'User'
     getUser: 'User'
   }
   Query: { // field return type name
     job: 'Job'
     jobs: 'Job'
+    me: 'User'
   }
   User: { // field return type name
+    appliedJobs: 'UsersJobs'
     createdAt: 'DateTime'
     email: 'String'
     id: 'Int'
     role: 'role'
   }
+  UsersJobs: { // field return type name
+    appliedAt: 'DateTime'
+    job: 'Job'
+  }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
+    addJobToUser: { // args
+      jobId: number; // Int!
+      userId: number; // Int!
+    }
     addNewUser: { // args
       input: NexusGenInputs['CredentialsInputType']; // CredentialsInputType!
     }
@@ -164,6 +186,9 @@ export interface NexusGenArgTypes {
   Query: {
     job: { // args
       id: number; // Int!
+    }
+    me: { // args
+      userId: number; // Int!
     }
   }
 }
