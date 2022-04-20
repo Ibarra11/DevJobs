@@ -1,10 +1,16 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -18,144 +24,193 @@ export type Scalars = {
 };
 
 export type CredentialsInputType = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars["String"];
+  password: Scalars["String"];
   role: Role;
 };
 
 export type Job = {
-  __typename?: 'Job';
-  apply: Scalars['String'];
-  company: Scalars['String'];
-  contract: Scalars['String'];
-  id: Scalars['Int'];
-  jobDescription: Scalars['String'];
-  jobRequirementContent: Scalars['String'];
-  jobRequirementList: Array<Scalars['String']>;
-  jobRoleContent: Scalars['String'];
-  jobRoleList: Array<Scalars['String']>;
-  location: Scalars['String'];
-  logoUrl: Scalars['String'];
-  position: Scalars['String'];
-  postedAt: Scalars['String'];
-  website: Scalars['String'];
+  __typename?: "Job";
+  apply: Scalars["String"];
+  company: Scalars["String"];
+  contract: Scalars["String"];
+  id: Scalars["Int"];
+  jobDescription: Scalars["String"];
+  jobRequirementContent: Scalars["String"];
+  jobRequirementList: Array<Scalars["String"]>;
+  jobRoleContent: Scalars["String"];
+  jobRoleList: Array<Scalars["String"]>;
+  location: Scalars["String"];
+  logoUrl: Scalars["String"];
+  position: Scalars["String"];
+  postedAt: Scalars["String"];
+  website: Scalars["String"];
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   addJobToUser: User;
   addNewUser: User;
   getUser?: Maybe<User>;
 };
 
-
 export type MutationAddJobToUserArgs = {
-  jobId: Scalars['Int'];
-  userId: Scalars['Int'];
+  jobId: Scalars["Int"];
+  userId: Scalars["Int"];
 };
-
 
 export type MutationAddNewUserArgs = {
   input: CredentialsInputType;
 };
-
 
 export type MutationGetUserArgs = {
   input: CredentialsInputType;
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   job?: Maybe<Job>;
   jobs: Array<Job>;
   me?: Maybe<User>;
 };
 
-
 export type QueryJobArgs = {
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 };
 
-
 export type QueryMeArgs = {
-  userId: Scalars['Int'];
+  userId: Scalars["Int"];
 };
 
 export type User = {
-  __typename?: 'User';
+  __typename?: "User";
   appliedJobs: Array<UsersJobs>;
-  createdAt: Scalars['DateTime'];
-  email: Scalars['String'];
-  id: Scalars['Int'];
+  createdAt: Scalars["DateTime"];
+  email: Scalars["String"];
+  id: Scalars["Int"];
   role: Role;
 };
 
 export type UsersJobs = {
-  __typename?: 'UsersJobs';
-  appliedAt?: Maybe<Scalars['DateTime']>;
+  __typename?: "UsersJobs";
+  appliedAt?: Maybe<Scalars["DateTime"]>;
   job?: Maybe<Job>;
 };
 
 export enum Role {
-  Developer = 'DEVELOPER',
-  Employer = 'EMPLOYER'
+  Developer = "DEVELOPER",
+  Employer = "EMPLOYER",
 }
 
 export type AppliedJobsQueryVariables = Exact<{
-  userId: Scalars['Int'];
+  userId: Scalars["Int"];
 }>;
 
+export type AppliedJobsQuery = {
+  __typename?: "Query";
+  me?: {
+    __typename?: "User";
+    id: number;
+    appliedJobs: Array<{
+      __typename?: "UsersJobs";
+      appliedAt?: any | null;
+      job?: { __typename?: "Job"; company: string } | null;
+    }>;
+  } | null;
+};
 
-export type AppliedJobsQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, appliedJobs: Array<{ __typename?: 'UsersJobs', appliedAt?: any | null, job?: { __typename?: 'Job', company: string } | null }> } | null };
+export type JobsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type JobsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type JobsQuery = { __typename?: 'Query', jobs: Array<{ __typename?: 'Job', id: number, postedAt: string, contract: string, company: string, position: string, location: string }> };
+export type JobsQuery = {
+  __typename?: "Query";
+  jobs: Array<{
+    __typename?: "Job";
+    id: number;
+    postedAt: string;
+    contract: string;
+    company: string;
+    position: string;
+    location: string;
+  }>;
+};
 
 export type JobQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars["Int"];
 }>;
 
-
-export type JobQuery = { __typename?: 'Query', job?: { __typename?: 'Job', id: number, company: string, position: string, postedAt: string, contract: string, location: string, website: string, apply: string, jobDescription: string, jobRequirementContent: string, jobRequirementList: Array<string>, jobRoleContent: string, jobRoleList: Array<string> } | null };
+export type JobQuery = {
+  __typename?: "Query";
+  job?: {
+    __typename?: "Job";
+    id: number;
+    company: string;
+    position: string;
+    postedAt: string;
+    contract: string;
+    location: string;
+    website: string;
+    apply: string;
+    jobDescription: string;
+    jobRequirementContent: string;
+    jobRequirementList: Array<string>;
+    jobRoleContent: string;
+    jobRoleList: Array<string>;
+  } | null;
+};
 
 export type AddJobToUserMutationVariables = Exact<{
-  jobId: Scalars['Int'];
-  userId: Scalars['Int'];
+  jobId: Scalars["Int"];
+  userId: Scalars["Int"];
 }>;
 
-
-export type AddJobToUserMutation = { __typename?: 'Mutation', addJobToUser: { __typename?: 'User', id: number } };
+export type AddJobToUserMutation = {
+  __typename?: "Mutation";
+  addJobToUser: { __typename?: "User"; id: number };
+};
 
 export type AddNewUserMutationVariables = Exact<{
   input: CredentialsInputType;
 }>;
 
-
-export type AddNewUserMutation = { __typename?: 'Mutation', addNewUser: { __typename?: 'User', id: number, email: string, createdAt: any, role: Role } };
+export type AddNewUserMutation = {
+  __typename?: "Mutation";
+  addNewUser: {
+    __typename?: "User";
+    id: number;
+    email: string;
+    createdAt: any;
+    role: Role;
+  };
+};
 
 export type GetUserMutationVariables = Exact<{
   input: CredentialsInputType;
 }>;
 
-
-export type GetUserMutation = { __typename?: 'Mutation', getUser?: { __typename?: 'User', id: number, email: string, createdAt: any, role: Role } | null };
-
+export type GetUserMutation = {
+  __typename?: "Mutation";
+  getUser?: {
+    __typename?: "User";
+    id: number;
+    email: string;
+    createdAt: any;
+    role: Role;
+  } | null;
+};
 
 export const AppliedJobsDocument = gql`
-    query AppliedJobs($userId: Int!) {
-  me(userId: $userId) {
-    id
-    appliedJobs {
-      appliedAt
-      job {
-        company
+  query AppliedJobs($userId: Int!) {
+    me(userId: $userId) {
+      id
+      appliedJobs {
+        appliedAt
+        job {
+          company
+        }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useAppliedJobsQuery__
@@ -173,29 +228,50 @@ export const AppliedJobsDocument = gql`
  *   },
  * });
  */
-export function useAppliedJobsQuery(baseOptions: Apollo.QueryHookOptions<AppliedJobsQuery, AppliedJobsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AppliedJobsQuery, AppliedJobsQueryVariables>(AppliedJobsDocument, options);
-      }
-export function useAppliedJobsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AppliedJobsQuery, AppliedJobsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AppliedJobsQuery, AppliedJobsQueryVariables>(AppliedJobsDocument, options);
-        }
-export type AppliedJobsQueryHookResult = ReturnType<typeof useAppliedJobsQuery>;
-export type AppliedJobsLazyQueryHookResult = ReturnType<typeof useAppliedJobsLazyQuery>;
-export type AppliedJobsQueryResult = Apollo.QueryResult<AppliedJobsQuery, AppliedJobsQueryVariables>;
-export const JobsDocument = gql`
-    query Jobs {
-  jobs {
-    id
-    postedAt
-    contract
-    company
-    position
-    location
-  }
+export function useAppliedJobsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    AppliedJobsQuery,
+    AppliedJobsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<AppliedJobsQuery, AppliedJobsQueryVariables>(
+    AppliedJobsDocument,
+    options
+  );
 }
-    `;
+export function useAppliedJobsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    AppliedJobsQuery,
+    AppliedJobsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<AppliedJobsQuery, AppliedJobsQueryVariables>(
+    AppliedJobsDocument,
+    options
+  );
+}
+export type AppliedJobsQueryHookResult = ReturnType<typeof useAppliedJobsQuery>;
+export type AppliedJobsLazyQueryHookResult = ReturnType<
+  typeof useAppliedJobsLazyQuery
+>;
+export type AppliedJobsQueryResult = Apollo.QueryResult<
+  AppliedJobsQuery,
+  AppliedJobsQueryVariables
+>;
+export const JobsDocument = gql`
+  query Jobs {
+    jobs {
+      id
+      postedAt
+      contract
+      company
+      position
+      location
+    }
+  }
+`;
 
 /**
  * __useJobsQuery__
@@ -212,36 +288,43 @@ export const JobsDocument = gql`
  *   },
  * });
  */
-export function useJobsQuery(baseOptions?: Apollo.QueryHookOptions<JobsQuery, JobsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<JobsQuery, JobsQueryVariables>(JobsDocument, options);
-      }
-export function useJobsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<JobsQuery, JobsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<JobsQuery, JobsQueryVariables>(JobsDocument, options);
-        }
+export function useJobsQuery(
+  baseOptions?: Apollo.QueryHookOptions<JobsQuery, JobsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<JobsQuery, JobsQueryVariables>(JobsDocument, options);
+}
+export function useJobsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<JobsQuery, JobsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<JobsQuery, JobsQueryVariables>(
+    JobsDocument,
+    options
+  );
+}
 export type JobsQueryHookResult = ReturnType<typeof useJobsQuery>;
 export type JobsLazyQueryHookResult = ReturnType<typeof useJobsLazyQuery>;
 export type JobsQueryResult = Apollo.QueryResult<JobsQuery, JobsQueryVariables>;
 export const JobDocument = gql`
-    query Job($id: Int!) {
-  job(id: $id) {
-    id
-    company
-    position
-    postedAt
-    contract
-    location
-    website
-    apply
-    jobDescription
-    jobRequirementContent
-    jobRequirementList
-    jobRoleContent
-    jobRoleList
+  query Job($id: Int!) {
+    job(id: $id) {
+      id
+      company
+      position
+      postedAt
+      contract
+      location
+      website
+      apply
+      jobDescription
+      jobRequirementContent
+      jobRequirementList
+      jobRoleContent
+      jobRoleList
+    }
   }
-}
-    `;
+`;
 
 /**
  * __useJobQuery__
@@ -259,25 +342,32 @@ export const JobDocument = gql`
  *   },
  * });
  */
-export function useJobQuery(baseOptions: Apollo.QueryHookOptions<JobQuery, JobQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<JobQuery, JobQueryVariables>(JobDocument, options);
-      }
-export function useJobLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<JobQuery, JobQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<JobQuery, JobQueryVariables>(JobDocument, options);
-        }
+export function useJobQuery(
+  baseOptions: Apollo.QueryHookOptions<JobQuery, JobQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<JobQuery, JobQueryVariables>(JobDocument, options);
+}
+export function useJobLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<JobQuery, JobQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<JobQuery, JobQueryVariables>(JobDocument, options);
+}
 export type JobQueryHookResult = ReturnType<typeof useJobQuery>;
 export type JobLazyQueryHookResult = ReturnType<typeof useJobLazyQuery>;
 export type JobQueryResult = Apollo.QueryResult<JobQuery, JobQueryVariables>;
 export const AddJobToUserDocument = gql`
-    mutation AddJobToUser($jobId: Int!, $userId: Int!) {
-  addJobToUser(jobId: $jobId, userId: $userId) {
-    id
+  mutation AddJobToUser($jobId: Int!, $userId: Int!) {
+    addJobToUser(jobId: $jobId, userId: $userId) {
+      id
+    }
   }
-}
-    `;
-export type AddJobToUserMutationFn = Apollo.MutationFunction<AddJobToUserMutation, AddJobToUserMutationVariables>;
+`;
+export type AddJobToUserMutationFn = Apollo.MutationFunction<
+  AddJobToUserMutation,
+  AddJobToUserMutationVariables
+>;
 
 /**
  * __useAddJobToUserMutation__
@@ -297,24 +387,41 @@ export type AddJobToUserMutationFn = Apollo.MutationFunction<AddJobToUserMutatio
  *   },
  * });
  */
-export function useAddJobToUserMutation(baseOptions?: Apollo.MutationHookOptions<AddJobToUserMutation, AddJobToUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddJobToUserMutation, AddJobToUserMutationVariables>(AddJobToUserDocument, options);
-      }
-export type AddJobToUserMutationHookResult = ReturnType<typeof useAddJobToUserMutation>;
-export type AddJobToUserMutationResult = Apollo.MutationResult<AddJobToUserMutation>;
-export type AddJobToUserMutationOptions = Apollo.BaseMutationOptions<AddJobToUserMutation, AddJobToUserMutationVariables>;
-export const AddNewUserDocument = gql`
-    mutation AddNewUser($input: CredentialsInputType!) {
-  addNewUser(input: $input) {
-    id
-    email
-    createdAt
-    role
-  }
+export function useAddJobToUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddJobToUserMutation,
+    AddJobToUserMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    AddJobToUserMutation,
+    AddJobToUserMutationVariables
+  >(AddJobToUserDocument, options);
 }
-    `;
-export type AddNewUserMutationFn = Apollo.MutationFunction<AddNewUserMutation, AddNewUserMutationVariables>;
+export type AddJobToUserMutationHookResult = ReturnType<
+  typeof useAddJobToUserMutation
+>;
+export type AddJobToUserMutationResult =
+  Apollo.MutationResult<AddJobToUserMutation>;
+export type AddJobToUserMutationOptions = Apollo.BaseMutationOptions<
+  AddJobToUserMutation,
+  AddJobToUserMutationVariables
+>;
+export const AddNewUserDocument = gql`
+  mutation AddNewUser($input: CredentialsInputType!) {
+    addNewUser(input: $input) {
+      id
+      email
+      createdAt
+      role
+    }
+  }
+`;
+export type AddNewUserMutationFn = Apollo.MutationFunction<
+  AddNewUserMutation,
+  AddNewUserMutationVariables
+>;
 
 /**
  * __useAddNewUserMutation__
@@ -333,24 +440,41 @@ export type AddNewUserMutationFn = Apollo.MutationFunction<AddNewUserMutation, A
  *   },
  * });
  */
-export function useAddNewUserMutation(baseOptions?: Apollo.MutationHookOptions<AddNewUserMutation, AddNewUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddNewUserMutation, AddNewUserMutationVariables>(AddNewUserDocument, options);
-      }
-export type AddNewUserMutationHookResult = ReturnType<typeof useAddNewUserMutation>;
-export type AddNewUserMutationResult = Apollo.MutationResult<AddNewUserMutation>;
-export type AddNewUserMutationOptions = Apollo.BaseMutationOptions<AddNewUserMutation, AddNewUserMutationVariables>;
-export const GetUserDocument = gql`
-    mutation GetUser($input: CredentialsInputType!) {
-  getUser(input: $input) {
-    id
-    email
-    createdAt
-    role
-  }
+export function useAddNewUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddNewUserMutation,
+    AddNewUserMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddNewUserMutation, AddNewUserMutationVariables>(
+    AddNewUserDocument,
+    options
+  );
 }
-    `;
-export type GetUserMutationFn = Apollo.MutationFunction<GetUserMutation, GetUserMutationVariables>;
+export type AddNewUserMutationHookResult = ReturnType<
+  typeof useAddNewUserMutation
+>;
+export type AddNewUserMutationResult =
+  Apollo.MutationResult<AddNewUserMutation>;
+export type AddNewUserMutationOptions = Apollo.BaseMutationOptions<
+  AddNewUserMutation,
+  AddNewUserMutationVariables
+>;
+export const GetUserDocument = gql`
+  mutation GetUser($input: CredentialsInputType!) {
+    getUser(input: $input) {
+      id
+      email
+      createdAt
+      role
+    }
+  }
+`;
+export type GetUserMutationFn = Apollo.MutationFunction<
+  GetUserMutation,
+  GetUserMutationVariables
+>;
 
 /**
  * __useGetUserMutation__
@@ -369,10 +493,21 @@ export type GetUserMutationFn = Apollo.MutationFunction<GetUserMutation, GetUser
  *   },
  * });
  */
-export function useGetUserMutation(baseOptions?: Apollo.MutationHookOptions<GetUserMutation, GetUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<GetUserMutation, GetUserMutationVariables>(GetUserDocument, options);
-      }
+export function useGetUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    GetUserMutation,
+    GetUserMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<GetUserMutation, GetUserMutationVariables>(
+    GetUserDocument,
+    options
+  );
+}
 export type GetUserMutationHookResult = ReturnType<typeof useGetUserMutation>;
 export type GetUserMutationResult = Apollo.MutationResult<GetUserMutation>;
-export type GetUserMutationOptions = Apollo.BaseMutationOptions<GetUserMutation, GetUserMutationVariables>;
+export type GetUserMutationOptions = Apollo.BaseMutationOptions<
+  GetUserMutation,
+  GetUserMutationVariables
+>;
