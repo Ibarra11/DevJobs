@@ -1,7 +1,8 @@
 import AppliedJobs from "../components/appliedJobs";
+import JobTable from "../components/JobTable";
 import { gql } from "@apollo/client";
 import { useAppliedJobsQuery } from "../graphql/generated";
-import { NexusGenObjects } from "../graphql/nexus-generated-types";
+import { UserJobs, UserSession } from "../types";
 import { prisma } from "../lib/prisma";
 import { InferGetServerSidePropsType } from "next";
 import { withSessionSsr } from "../lib/session";
@@ -26,18 +27,10 @@ const AppliedJobsRoute = ({
   console.log(jobs);
   return (
     <div className="max-w-3xl mx-auto h-full py-9 border-2 border-green-400">
-      <AppliedJobs />
+      <JobTable jobs={jobs} />
     </div>
   );
 };
-
-type UserSession = {
-  id: number;
-  email: string;
-  role: "DEVELOPER" | "EMPLOYER";
-};
-
-type UserJobs = { job: NexusGenObjects["Job"]; appliedAt: string }[];
 
 export const getServerSideProps = withSessionSsr<{
   user: UserSession;
